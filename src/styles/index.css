@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#map {
+    height: 100%;
+    width: 100%;
+}
+
+.mouse-position {
+    @apply text-black font-semibold;
+}
+
+.fs-button {
+    @apply text-black font-semibold text-3xl p-1;
+}
+
+.scale-line {
+    @apply text-black font-semibold;
+}
