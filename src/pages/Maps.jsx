@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react'; // react hooks
 import Map from 'ol/Map';
 import View from 'ol/View';
 import TileLayer from 'ol/layer/Tile.js';
@@ -7,7 +7,6 @@ import BingMaps from 'ol/source/BingMaps.js';
 import LayerGroup from 'ol/layer/Group';
 import { fromLonLat } from 'ol/proj';
 import FullScreen from 'ol/control/FullScreen.js';
-import Container from './layouts/Container';
 import MousePosition from 'ol/control/MousePosition.js';
 import { createStringXY } from 'ol/coordinate.js';
 import { ScaleLine } from 'ol/control.js';
@@ -17,8 +16,10 @@ import GeoJSON from 'ol/format/GeoJSON';
 import Style from 'ol/style/Style';
 import Stroke from 'ol/style/Stroke';
 import Circle from 'ol/style/Circle';
-import Fill from 'ol/style/Fill';
-import Button from '../components/Button';
+import Fill from 'ol/style/Fill'; // open layers api
+
+import Container from './layouts/Container';
+import Button from '../components/Button'; //custom components
 import {
 	BadgeCheck,
 	BadgeInfo,
@@ -27,13 +28,15 @@ import {
 	ScanEye,
 	ZoomIn,
 	ZoomOut,
-} from 'lucide-react';
+} from 'lucide-react'; // icons
 
 export default function Maps() {
 	const mapRef = useRef(null);
+	const mapp = useRef(null);
 	const mousePositionRef = useRef(null);
 	const scaleLineRef = useRef(null);
-	const contentRef = useRef(null);
+	const [descript, setDescript] = useState('');
+	const [province, setProvince] = useState('');
 	const [featureInfoTriggered, setFeatureInfoTriggered] = useState(false);
 	const [provinceQueryTriggered, setProvinceQueryTriggered] = useState(false);
 	const [regions, setRegions] = useState([]);
@@ -82,7 +85,7 @@ export default function Maps() {
 		});
 
 		mapRef.current = new Map({
-			target: 'map',
+			target: mapp.current,
 			view: mapView,
 			controls: [fs, mp, scale],
 			layers: getLayers(),
@@ -105,26 +108,25 @@ export default function Maps() {
 						}),
 					}),
 					new TileLayer({
-						title: 'Municipalities of the Philippines',
+						title: 'PH_MUNI',
 						opacity: 0,
 						source: new TileWMS({
 							url: 'http://localhost:8080/geoserver/ITE-18-WEBGIS/wms',
 							params: {
-								LAYERS: 'ITE-18-WEBGIS:Municipalities',
+								LAYERS: 'ITE-18-WEBGIS:PH_MUNI',
 								TILED: true,
-								VERSION: '1.1.0',
 							},
 							serverType: 'geoserver',
 							visible: true,
 						}),
 					}),
 					new TileLayer({
-						title: 'Land Cover of the Philippines',
+						title: 'LandCover_w84',
 						opacity: 1,
 						source: new TileWMS({
 							url: 'http://localhost:8080/geoserver/ITE-18-WEBGIS/wms',
 							params: {
-								LAYERS: 'ITE-18-WEBGIS:demo',
+								LAYERS: 'ITE-18-WEBGIS:LandCover_w84',
 								TILED: true,
 							},
 							serverType: 'geoserver',
@@ -146,13 +148,12 @@ export default function Maps() {
 				.getLayers()
 				.getArray();
 			const [Municipalities, LandCover] = [layers[1], layers[2]];
-
 			const fetchUrls = [
 				LandCover.getSource().getFeatureInfoUrl(
 					e.coordinate,
 					resolution,
 					projection,
-					{ INFO_FORMAT: 'application/json', propertyName: 'descript' }
+					{ INFO_FORMAT: 'application/json', propertyName: 'DESCRIPT' }
 				),
 				Municipalities.getSource().getFeatureInfoUrl(
 					e.coordinate,
@@ -160,36 +161,30 @@ export default function Maps() {
 					projection,
 					{
 						INFO_FORMAT: 'application/json',
-						propertyName: 'Pro_Name,Reg_Name,Mun_Name',
+						propertyName: 'Pro_Name',
 					}
 				),
 			];
 
 			const [landCoverResponse, municipalitiesResponse] = await Promise.all(
 				fetchUrls.map((url) =>
-					url ? fetch(url).then((res) => res.json()) : null
+					url
+						? fetch(url)
+								.then((res) =>
+									res.ok ? res.json() : Promise.reject('Failed to fetch')
+								)
+								.catch((err) => console.error(err))
+						: null
 				)
 			);
 
-			let contentHTML = '';
-
 			if (landCoverResponse && landCoverResponse.features[0]) {
-				const feature = landCoverResponse.features[0];
-				contentHTML += `
-        <h3>Description:</h3>
-        <p class="font-bold">${feature.properties.descript}</p>
-      `;
+				setDescript(landCoverResponse.features[0].properties.DESCRIPT);
 			}
 
 			if (municipalitiesResponse && municipalitiesResponse.features[0]) {
-				const feature = municipalitiesResponse.features[0];
-				contentHTML += `
-        <h3>Province:</h3>
-        <p class="font-bold">${feature.properties.Pro_Name}</p>
-      `;
+				setProvince(municipalitiesResponse.features[0].properties.Pro_Name);
 			}
-
-			contentRef.current.innerHTML = contentHTML;
 		} catch (error) {
 			console.error('Error fetching the data:', error);
 		}
@@ -201,7 +196,7 @@ export default function Maps() {
 	};
 
 	const handleQueryScan = () => {
-		setFeatureInfoTriggered(false);
+		setDescript('');
 		setProvinceQueryTriggered((prev) => !prev);
 	};
 
@@ -222,7 +217,7 @@ export default function Maps() {
 			service: 'WFS',
 			version: '1.0.0',
 			request: 'GetFeature',
-			typeName: 'ITE-18-WEBGIS:Municipalities',
+			typeName: 'ITE-18-WEBGIS:PH_MUNI',
 			propertyName: 'Reg_Name',
 			outputFormat: 'application/json',
 		});
@@ -245,7 +240,7 @@ export default function Maps() {
 			service: 'WFS',
 			version: '1.0.0',
 			request: 'GetFeature',
-			typeName: 'ITE-18-WEBGIS:Municipalities',
+			typeName: 'ITE-18-WEBGIS:PH_MUNI',
 			propertyName: 'Pro_Name',
 			CQL_FILTER: `Reg_Name='${selectedRegion}'`,
 			outputFormat: 'application/json',
@@ -316,7 +311,7 @@ export default function Maps() {
 			service: 'WFS',
 			version: '1.0.0',
 			request: 'GetFeature',
-			typeName: 'ITE-18-WEBGIS:Municipalities',
+			typeName: 'ITE-18-WEBGIS:PH_MUNI',
 			propertyName: 'the_geom',
 			CQL_FILTER: `Pro_Name='${selectedProvince}'`,
 			outputFormat: 'application/json',
@@ -329,86 +324,100 @@ export default function Maps() {
 	};
 
 	return (
-		<Container>
-			<div id='map' className='h-full w-full bg-white'></div>
-			<div className='flex justify-between items-center bg-gray-200 p-1 rounded-b-lg'>
-				<div className='flex justify-center gap-2 pl-2'>
-					<Button route='/'>
-						<Home strokeWidth={2.5} />
-					</Button>
-					<button id='fullscreen' className='fs-button'></button>
-					<button onClick={zoomIn}>
-						<ZoomIn strokeWidth={2.5} />
-					</button>
-					<button onClick={zoomOut}>
-						<ZoomOut strokeWidth={2.5} />
-					</button>
-					{featureInfoTriggered ? (
-						<button onClick={handleInfoScan}>
-							<EyeOff strokeWidth={2.5} />
-						</button>
-					) : (
-						<button onClick={handleInfoScan}>
-							<ScanEye strokeWidth={2.5} />
-						</button>
-					)}
-					{provinceQueryTriggered ? (
-						<button onClick={handleQueryScan}>
-							<BadgeCheck strokeWidth={2.5} />
-						</button>
-					) : (
-						<button onClick={handleQueryScan}>
-							<BadgeInfo strokeWidth={2.5} />
-						</button>
-					)}
-				</div>
-				<div>
-					{featureInfoTriggered && (
-						<h1 className='flex gap-2' ref={contentRef}></h1>
-					)}
-					{provinceQueryTriggered && (
-						<div className='flex gap-2'>
-							<select
-								className='uppercase font-bold'
-								value={selectedRegion}
-								onChange={(e) => setSelectedRegion(e.target.value)}>
-								<option value=''>**select a region**</option>
-								{regions
-									.sort((a, b) => a.localeCompare(b))
-									.map((region, index) => (
-										<option key={index} value={region}>
-											{region}
-										</option>
-									))}
-							</select>
-							{selectedRegion && (
-								<select
-									className='uppercase font-bold'
-									value={selectedProvince}
-									onChange={(e) => setSelectedProvince(e.target.value)}>
-									<option value=''>**select a province**</option>
-									{provinces
-										.sort((a, b) => a.localeCompare(b))
-										.map((province, index) => (
-											<option key={index} value={province}>
-												{province}
-											</option>
-										))}
-								</select>
-							)}
-							<button
-								onClick={handleSubmit}
-								className='bg-white p-2 rounded-3xl border border-black'>
-								<h1 className='uppercase font-bold'>submit</h1>
+		<Container id='Maps'>
+			<div className='h-full w-full flex flex-col pt-28 bg-[#ECDED5]'>
+				<div className='h-full w-full flex flex-col p-10 bg-[#2F5025]'>
+					<div
+						id='map'
+						ref={mapp}
+						className='shadow-2xl border-2 border-b-0 border-neutral-900 bg-white'></div>
+					<div className='flex w-full justify-between items-center border-2 border-t-0 border-neutral-900 bg-gray-200 p-1 rounded-b-lg '>
+						<div className='flex flex-wrap justify-center gap-2 pl-2'>
+							<button>
+								<Button to='Hero'>
+									<Home strokeWidth={2.5} />
+								</Button>
 							</button>
+							<button id='fullscreen' className='fs-button'></button>
+							<button onClick={zoomIn}>
+								<ZoomIn strokeWidth={2.5} />
+							</button>
+							<button onClick={zoomOut}>
+								<ZoomOut strokeWidth={2.5} />
+							</button>
+							{featureInfoTriggered ? (
+								<button onClick={handleInfoScan}>
+									<EyeOff strokeWidth={2.5} />
+								</button>
+							) : (
+								<button onClick={handleInfoScan}>
+									<ScanEye strokeWidth={2.5} />
+								</button>
+							)}
+							{provinceQueryTriggered ? (
+								<button onClick={handleQueryScan}>
+									<BadgeCheck strokeWidth={2.5} />
+								</button>
+							) : (
+								<button onClick={handleQueryScan}>
+									<BadgeInfo strokeWidth={2.5} />
+								</button>
+							)}
 						</div>
-					)}
-				</div>
-				<div className='flex gap-5 max-w-1/12'>
-					<h1>Coordinates: </h1>
-					<h1 ref={mousePositionRef} className='mouse-position'></h1>
-					<h1>Scale: </h1>
-					<h1 ref={scaleLineRef} className='scale-line'></h1>
+						<div className='flex flex-wrap '>
+							{descript && (
+								<div className='flex gap-2'>
+									<h1>Description: </h1>
+									<h1 className='font-bold'>{descript}</h1>
+									<h1>Province: </h1>
+									<h1 className='font-bold'>{province}</h1>
+								</div>
+							)}
+							{provinceQueryTriggered && (
+								<div className='flex gap-2'>
+									<select
+										className='uppercase font-bold'
+										value={selectedRegion}
+										onChange={(e) => setSelectedRegion(e.target.value)}>
+										<option value=''>**select a region**</option>
+										{regions
+											.sort((a, b) => a.localeCompare(b))
+											.map((region, index) => (
+												<option key={index} value={region}>
+													{region}
+												</option>
+											))}
+									</select>
+									{selectedRegion && (
+										<select
+											className='uppercase font-bold'
+											value={selectedProvince}
+											onChange={(e) => setSelectedProvince(e.target.value)}>
+											<option value=''>**select a province**</option>
+											{provinces
+												.sort((a, b) => a.localeCompare(b))
+												.map((province, index) => (
+													<option key={index} value={province}>
+														{province}
+													</option>
+												))}
+										</select>
+									)}
+									<button
+										onClick={handleSubmit}
+										className='bg-white p-2 rounded-3xl border border-black'>
+										<h1 className='uppercase font-bold'>submit</h1>
+									</button>
+								</div>
+							)}
+						</div>
+						<div className='flex gap-5 max-w-1/12 md:max-w-full'>
+							<h1>Coordinates: </h1>
+							<h1 ref={mousePositionRef} className='mouse-position'></h1>
+							<h1>Scale: </h1>
+							<h1 ref={scaleLineRef} className='scale-line'></h1>
+						</div>
+					</div>
 				</div>
 			</div>
 		</Container>

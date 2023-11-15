@@ -7,6 +7,11 @@
     width: 100%;
 }
 
+.magic {
+    width: calc(100vw - var(--scrollbar-width));
+
+}
+
 .mouse-position {
     @apply text-black font-semibold;
 }

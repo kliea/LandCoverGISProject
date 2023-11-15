@@ -1,12 +1,11 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-scroll';
 
-export default function Button({ route, children }) {
-	const navigate = useNavigate();
-
-	const HandleClick = () => {
-		navigate(route);
-	};
-
-	return <button onClick={HandleClick}>{children}</button>;
+export default function Button({ to, children, ...props }) {
+	return (
+		// ...spread 
+		<Link to={to} {...props}>
+			{children}
+		</Link> // a html tag
+	);
 }
