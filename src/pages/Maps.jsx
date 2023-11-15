@@ -38,7 +38,7 @@ export default function Maps() {
 
 	return (
 		<Container id='Maps'>
-			<div className='h-full w-full flex flex-col pt-28 bg-[#ECDED5]'>
+			<div className='h-full w-full flex flex-col pt-28 bg-[#2F5025]'>
 				<div className='h-full w-full flex flex-col p-10 bg-[#2F5025]'>
 					<div
 						id='map'

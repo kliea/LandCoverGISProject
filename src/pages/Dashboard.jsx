@@ -8,15 +8,15 @@ export default function Dashboard() {
 	return (
 		<Container id='Hero'>
 			<div
-				className='h-full w-full bg-cover'
+				className='h-full w-full bg-cover backdrop-opacity-95 '
 				style={{ backgroundImage: `url(${Background})` }}>
 				<div className='h-full w-full  flex flex-col pt-28 p-4 drop-shadow-md'>
 					{/* <img src={Background} className='w-fit' /> */}
 					<h3 className='text-[#EDF5E1] text-[60px] pb-5'>
 						We{' '}
-						<span className='text-[#ffde59]'>
+						<span className='text-[#ffde59] font-bold'>
 							<Typed
-								strings={['Discover', 'Navigate', 'Delight']}
+								strings={['Discover', 'Navigate', 'Eat']}
 								typeSpeed={150}
 								backSpeed={150}
 								backDelay={150}
@@ -24,9 +24,10 @@ export default function Dashboard() {
 							/>
 						</span>
 					</h3>
-					<div className='text-[green]'>
+
+					<div className='text-[green] drop-shadow-lg'>
 						<h1>CARAGA STATE UNIVERSITY</h1>
-						<p className='text-[100px] font-[bolder] text-[#EDF5E1]'>
+						<p className='text-[90px] font-[bolder] text-[#EDF5E1] leading-[7.5rem]'>
 							The
 							<br />
 							Philippines'
@@ -38,7 +39,7 @@ export default function Dashboard() {
 
 					<button>
 						<Button to='Provinces'>
-							<h1 className='bg-black p-3 rounded-full border border-black w-[130px] text-lg text-[#549969] hover:bg-[#549969] hover:text-white'>
+							<h1 className='bg-[#549969] p-3 rounded-full font-bold w-[130px] text-lg text-white hover:bg-[#FFA500] hover:text-black '>
 								Explore
 							</h1>
 						</Button>

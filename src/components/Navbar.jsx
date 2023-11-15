@@ -21,7 +21,7 @@ export default function Navbar() {
 				</button>
 				<button>
 					<Button to='Maps'>
-						<h1 className='uppercase text-xl md:text-2xl'>Maps</h1>
+						<h1 className='uppercase text-xl md:text-2xl'>Map</h1>
 					</Button>
 				</button>
 				<button>

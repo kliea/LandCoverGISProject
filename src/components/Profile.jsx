@@ -1,28 +1,26 @@
-import React from 'react'
+import React from 'react';
+import { Facebook, Instagram, Twitter } from 'lucide-react';
 
-export default function Profile({name, job}) {
-  return (
-		<div className='flex  items-center justify-center'>
-			<div className='w-72 rounded-lg  bg-[#004643] p-10 text-center shadow-lg dark:bg-gray-800'>
-				<figure className='mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-indigo-500 dark:bg-indigo-600'>
-					<svg
-						xmlns='http://www.w3.org/2000/svg'
-						width='48'
-						height='48'
-						fill='currentColor'
-						className='bi bi-person-fill text-white dark:text-indigo-300'
-						viewBox='0 0 16 16'>
-						<path d='M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z'></path>
-					</svg>
-				</figure>
-				<h2 className='mt-4 text-3xl font-bold text-[#fffffe]'>{name}</h2>
-				<p className='mb-4 text-[#abd1c6]'>{job}</p>
-				<div className='flex items-center justify-center'>
-					<a
-						href='#'
-						className='rounded-full bg-[#f9bc60] px-6 py-3 text-[#001e1d] font-bold hover:bg-indigo-700 '>
-						Contact
+export default function Profile({ name, job, link, image }) {
+	console.log(image);
+	return (
+		<div className=' h-full w-full p-10'>
+			<div className='h-full w-full text-black rounded-xl flex flex-col justify-center gap-20'>
+				<div className='h-56 w-56 self-center overflow-hidden'>
+					<img src={image} alt={name} className='object-cover w-full h-full' />
+				</div>
+				<div className='flex flex-col justify-center items-center gap-2 pt-20 '>
+					<h2 className='font-bold text-2xl items-center text-slate-50'>
+						{name}
+					</h2>
+					<p className='font-bold text-slate-50'>{job}</p>
+				</div>
+				<div className='flex justify-center gap-4'>
+					<a href={link}>
+						<Facebook />
 					</a>
+					<Instagram />
+					<Twitter />
 				</div>
 			</div>
 		</div>
