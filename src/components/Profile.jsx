@@ -2,7 +2,6 @@ import React from 'react';
 import { Facebook, Instagram, Twitter } from 'lucide-react';
 
 export default function Profile({ name, job, link, image }) {
-	console.log(image);
 	return (
 		<div className=' h-full w-full p-10'>
 			<div className='h-full w-full text-black rounded-xl flex flex-col justify-center gap-20'>
