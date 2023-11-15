@@ -9,31 +9,31 @@ import Surigaodelnorte from '../assets/Surigaodelnorte.png';
 export default function Provinces() {
 	const cardData = [
 		{
-			name: 'Agusan Del Norte',
+			name: 'AGUSAN DEL NORTE',
 			description:
 				'this region is rich with mosaic of land uses, including extensive agriculture, significant natural vegetation, and water features, interspersed with human settlements and potentially industrial or extractive activities.',
 			image: Agusandelnorte,
 		},
 		{
-			name: 'Agusan Del Sur',
+			name: 'AGUSAN DEL SUR',
 			description:
 				'this region exhibits a complex tapestry of land uses, where natural features such as forests, water bodies, and wetlands are interspersed with human-driven landscapes like agriculture, urban development, and possibly extractive industries. ',
 			image: Agusandelsur,
 		},
 		{
-			name: 'Dinagat',
+			name: 'DINAGAT ISLANDS',
 			description:
 				'this region has a balanced distribution of land cover types, including productive agricultural lands, significant forested areas, and a variety of water bodies, all interspersed with human settlements. The presence of wetlands and potential mangrove zones indicates ecological diversity, particularly in coastal areas, which might be key for environmental conservation efforts.',
 			image: Dinagat,
 		},
 		{
-			name: 'Surigao Del Norte',
+			name: 'SURIGAO DEL NORTE',
 			description:
 				'this region boasts a variety of natural landscapes like forests, grasslands, and various types of water bodies, juxtaposed with human-utilized agricultural land. The presence of wetlands and potential mangrove forests, especially along the coastlines and the islands, suggests a rich ecological tapestry. Such areas are likely to be of high conservation value, providing critical services such as habitat for wildlife, storm protection, and water purification.',
 			image: Surigaodelnorte,
 		},
 		{
-			name: 'Surigao Del Sur',
+			name: 'SURIGAO DEL SUR',
 			description:
 				'this region has a rich array of natural habitats, from agricultural land to diverse forest types and aquatic ecosystems. The mix of these environments suggests a potential for a wide range of biodiversity and ecological services, as well as a landscape that supports various forms of land use by humans.',
 			image: SurigaoSur,

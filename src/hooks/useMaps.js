@@ -20,6 +20,7 @@ import Fill from 'ol/style/Fill'; // open layers api
 
 const useMaps = () => {
 	const mapRef = useRef(null);
+	const map = useRef(null);
 	const mousePositionRef = useRef(null);
 	const scaleLineRef = useRef(null);
 	const [descript, setDescript] = useState('');
@@ -250,7 +251,7 @@ const useMaps = () => {
 		if (selectedRegion) {
 			fetchProvincesData(selectedRegion, setProvinces);
 		}
-	}, [selectedRegion]); // Add selectedRegion to the dependency array to refetch when it changes
+	}, [selectedRegion, selectedProvince]); // Add selectedRegion to the dependency array to refetch when it changes
 
 	const newAddGeoJsonToMap = (url) => {
 		if (geoJsonLayer) {
@@ -292,6 +293,7 @@ const useMaps = () => {
 	};
 
 	const handleSubmit = () => {
+		console.log(selectedProvince);
 		const baseGeoServerUrl =
 			'http://localhost:8080/geoserver/ITE-18-WEBGIS/ows';
 		const geoServerParams = new URLSearchParams({
@@ -310,6 +312,7 @@ const useMaps = () => {
 		setSelectedProvince('');
 	};
 	const handleClick = (name) => {
+		console.log(name);
 		const baseGeoServerUrl =
 			'http://localhost:8080/geoserver/ITE-18-WEBGIS/ows';
 		const geoServerParams = new URLSearchParams({
@@ -322,11 +325,11 @@ const useMaps = () => {
 			outputFormat: 'application/json',
 		});
 		const fullGeoServerUrl = `${baseGeoServerUrl}?${geoServerParams.toString()}`;
+		console.log(fullGeoServerUrl);
 		newAddGeoJsonToMap(fullGeoServerUrl);
-		setSelectedRegion('');
-		setSelectedProvince('');
 	};
 	return {
+		map,
 		mousePositionRef,
 		scaleLineRef,
 		descript,

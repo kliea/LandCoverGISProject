@@ -1,11 +1,14 @@
-import React from 'react';
-import useMaps from '../hooks/useMaps';
+import React, { useContext } from 'react';
+import { CustomHookContext } from '../pages/layouts/HooksWrapper';
+import { Link } from 'react-scroll';
 
 export default function Card({ name, description, image }) {
 	// const { handleClick } = useMaps();
+	const { handleClick } = useContext(CustomHookContext);
 
 	const navClick = () => {
-		console.log(name);
+		handleClick(name);
+		// scroll here
 	};
 
 	return (
@@ -14,11 +17,10 @@ export default function Card({ name, description, image }) {
 			<div className='p-6 flex flex-col justify-between'>
 				<h5 className='text-lg md:text-xl font-bold text-gray-900'>{name}</h5>
 				<p className='text-gray-700 text-base mb-4'>{description}</p>
-				<button
-					onClick={navClick}
-					// onClick={handleClick} // Uncomment and use your onClick handler
-					className='self-start bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition-colors'>
-					Navigate
+				<button className='self-start bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition-colors'>
+					<Link to='Maps' onClick={() => handleClick(name)}>
+						Navigate
+					</Link>
 				</button>
 			</div>
 		</div>
