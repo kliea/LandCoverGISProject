@@ -34,7 +34,6 @@ export default function Maps() {
 		zoomIn,
 		zoomOut,
 		handleSubmit,
-		handleClick,
 	} = useContext(CustomHookContext);
 
 	return (

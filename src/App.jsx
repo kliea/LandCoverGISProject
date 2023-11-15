@@ -11,7 +11,7 @@ export default function App() {
 	return (
 		<main className='flex flex-col h-auto min-h-screen w-auto min-w-screen md:w-auto'>
 			<Navbar />
-			{/* <Dashboard /> */}
+			<Dashboard />
 			{/* <Home /> */}
 			<Provinces />
 			<Maps />
