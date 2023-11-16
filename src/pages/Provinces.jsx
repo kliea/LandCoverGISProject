@@ -6,7 +6,6 @@ import Agusandelsur from '../assets/Agusandelsur.png';
 import Agusandelnorte from '../assets/Agusandelnorte.png';
 import Dinagat from '../assets/Dinagat.png';
 import Surigaodelnorte from '../assets/Surigaodelnorte.png';
-
 export default function Provinces() {
 	const cardData = [
 		{
@@ -40,12 +39,15 @@ export default function Provinces() {
 			image: SurigaoSur,
 		},
 	];
+
 	return (
 		<Container id='Provinces'>
-			<div className='h-screen w-full bg-[#2F5025]'>
-				<div className='h-full w-full flex flex-col pt-28 p-4 justify-center gap-2 '>
-					<h1 className=' text-5xl font-bold text-[#FFA500]'>
-						The Choosen 5 Provinces
+			<div className='h-full w-full bg-[#2F5025]'>
+				<div className='h-full w-full flex flex-col p-4 justify-center gap-10 '>
+					<h1
+						className=' text-5xl font-bold text-[#EDF5E1] drop-shadow-xl'
+						style={{ textShadow: ' 3px 6px 3px rgba(0,0,0, 0.5)' }}>
+						The 5 Provinces of CARAGA
 					</h1>
 					<Carousel cards={cardData} />
 				</div>

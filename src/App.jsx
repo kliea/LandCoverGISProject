@@ -6,24 +6,18 @@ import About from './pages/About';
 import Navbar from './components/Navbar';
 import Provinces from './pages/Provinces';
 import Home from './pages/Home';
+import Footer from './components/Footer';
 
 export default function App() {
 	return (
 		<main className='flex flex-col h-auto min-h-screen w-auto min-w-screen md:w-auto'>
 			<Navbar />
 			<Dashboard />
-			{/* <Home /> */}
+			<Home />
 			<Provinces />
 			<Maps />
 			<About />
+			<Footer />
 		</main>
 	);
-}
-
-{
-	/* <Routes>
-				<Route path='/' element={<Dashboard />} />
-				<Route path='/about' element={<About />} />
-				<Route path='/maps' element={<Maps />} />
-			</Routes> */
 }

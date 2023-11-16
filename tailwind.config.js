@@ -6,6 +6,10 @@ export default {
 			width: {
 				'screen-40': '40vw',
 			},
+			fontFamily: {
+				sans: ['Graphik', 'sans-serif'],
+				serif: ['Merriweather', 'serif'],
+			},
 		},
 	},
 	plugins: [],

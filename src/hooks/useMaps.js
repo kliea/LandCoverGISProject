@@ -328,6 +328,7 @@ const useMaps = () => {
 		console.log(fullGeoServerUrl);
 		newAddGeoJsonToMap(fullGeoServerUrl);
 	};
+
 	return {
 		map,
 		mousePositionRef,
