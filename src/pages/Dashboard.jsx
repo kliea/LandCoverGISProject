@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import Typed from 'react-typed';
+import React from 'react';
+// import Typed from 'react-typed';
 import Background from '../assets/background.jpg';
 import Container from './layouts/Container';
 import Button from '../components/Button';
@@ -11,17 +11,17 @@ export default function Dashboard() {
 				className='h-full w-full bg-cover backdrop-opacity-95 '
 				style={{ backgroundImage: `url(${Background})` }}>
 				<div className='h-full w-full  flex flex-col pt-28 p-4 drop-shadow-md'>
-					{/* <img src={Background} className='w-fit' /> */}
 					<h3 className='text-[#EDF5E1] text-[60px] pb-5'>
-						We{' '}
+						We
 						<span className='text-[#ffde59] font-bold'>
-							<Typed
+							{/* <Typed
 								strings={['Discover', 'Navigate', 'Eat']}
 								typeSpeed={150}
 								backSpeed={150}
 								backDelay={150}
 								loop
-							/>
+							/> */}
+							Discover
 						</span>
 					</h3>
 
