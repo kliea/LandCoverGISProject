@@ -45,7 +45,7 @@ export default function Provinces() {
 			<div className='h-full w-full bg-[#2F5025]'>
 				<div className='h-full w-full flex flex-col p-4 justify-center gap-10 '>
 					<h1
-						className=' text-5xl font-bold text-[#EDF5E1] drop-shadow-xl'
+						className=' text-5xl pl-20 font-bold text-[#EDF5E1] drop-shadow-xl'
 						style={{ textShadow: ' 3px 6px 3px rgba(0,0,0, 0.5)' }}>
 						The 5 Provinces of CARAGA
 					</h1>

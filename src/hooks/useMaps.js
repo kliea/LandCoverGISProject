@@ -17,6 +17,8 @@ import Style from 'ol/style/Style';
 import Stroke from 'ol/style/Stroke';
 import Circle from 'ol/style/Circle';
 import Fill from 'ol/style/Fill'; // open layers api
+import LayerSwitcher from 'ol-layerswitcher';
+import 'ol-layerswitcher/dist/ol-layerswitcher.css';
 
 const useMaps = () => {
 	const mapRef = useRef(null);
@@ -72,10 +74,16 @@ const useMaps = () => {
 			target: scaleLineRef.current,
 		});
 
+		var layerSwitcher = new LayerSwitcher({
+			activationMode: 'click',
+			startActive: false,
+			groupSelectStyle: 'children',
+		});
+
 		mapRef.current = new Map({
 			target: 'map',
 			view: mapView,
-			controls: [fs, mp, scale],
+			controls: [fs, mp, scale, layerSwitcher],
 			layers: getLayers(),
 		});
 	};
@@ -83,9 +91,14 @@ const useMaps = () => {
 	const getLayers = () => {
 		return [
 			new LayerGroup({
-				title: 'layers',
+				title: 'built-in layers',
 				fold: true,
 				layers: [
+					new TileLayer({
+						title: 'None',
+						type: 'base',
+						visible: true,
+					}),
 					new TileLayer({
 						title: 'Aerial',
 						type: 'base',
@@ -95,6 +108,12 @@ const useMaps = () => {
 							imagerySet: 'Aerial',
 						}),
 					}),
+				],
+			}),
+			new LayerGroup({
+				title: 'shape layers',
+				fold: true,
+				layers: [
 					new TileLayer({
 						title: 'PH_MUNI',
 						opacity: 0,
@@ -132,10 +151,11 @@ const useMaps = () => {
 			const projection = mapRef.current.getView().getProjection();
 			const layers = mapRef.current
 				.getLayers()
-				.getArray()[0]
+				.getArray()[1]
 				.getLayers()
 				.getArray();
-			const [Municipalities, LandCover] = [layers[1], layers[2]];
+			const [Municipalities, LandCover] = [layers[0], layers[1]];
+			console.log(Municipalities);
 			const fetchUrls = [
 				LandCover.getSource().getFeatureInfoUrl(
 					e.coordinate,

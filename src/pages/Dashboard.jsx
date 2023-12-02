@@ -49,7 +49,7 @@ export default function Dashboard() {
 								</h1>
 							</Button>
 						</button>
-						<div className='text-white font-bold pt-10'>
+						<div className='text-white font-bold pt-20'>
 							<h3>A WEB-GIS Project of ITE-18 GROUP 1</h3>
 							<p>
 								Caraga State University - Main, Ampayon, Butuan City, Agusan del
